@@ -8,9 +8,9 @@
 function varnishPurge ($txtUrl)
 {
   // Configuration for the Varnish Server
-  $varniship = '54.155.30.126';
+  $varniship = '1.1.1.1';
   $varnishport = '80';
-  $varnishtoken = 'pEpu8aka';
+  $varnishtoken = 'blabla';
 
   // Step one: prepare the string, strip the http(s):// prefix
   $protocols = array('http://' => '', 'https://' => '');
