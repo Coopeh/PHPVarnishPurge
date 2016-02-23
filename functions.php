@@ -10,7 +10,7 @@ function varnishPurge ($txtUrl)
   // Configuration for the Varnish Server
   $varniship = '1.1.1.1';
   $varnishport = '80';
-  $varnishtoken = 'blabla';
+  $varnishtoken = 'bla';
 
   // Step one: prepare the string, strip the http(s):// prefix
   $protocols = array('http://' => '', 'https://' => '');
@@ -54,8 +54,11 @@ function varnishPurge ($txtUrl)
   elseif (trim(strip_tags($resultsArray[23])) == 'Purged.') {
     echo "<span class='ok'>URL purged</span>";
   }
+  elseif (trim(strip_tags($resultsArray[22])) == 'Error 200 Ban added') {
+    echo "<span class='ok'>URL purged</span>";
+  }
   else {
-    echo "<span class='error'>Couldn't find URL in cache(2)<span>";
+    echo "<span class='error'>Couldn't find URL in cache(2)</span>";
   }
   echo '</div>';
 }
@@ -68,31 +71,3 @@ function strposa($haystack, $needle, $offset=0) {
     }
     return false;
 }
-
-/**
- * varnishPurgedSimplifiedExample
- *
- * @access public
- * @return void
- */
-function varnishPurgedSimplifiedExample ( )
-{
-    // Open the socket
-    $errno = ( integer) "";
-    $errstr = ( string) "";
-    $varnish_sock = fsockopen( "54.155.30.126", "80", $errno, $errstr, 10);
-
-    // Prepare the command to send
-    $cmd = "PURGE /some/webpage/of/me.html HTTP/1.0\r\n";
-    $cmd .= "Host: www.mydomain.be\r\n";
-    $cmd .= "Connection: Close\r\n";
-    $cmd .= "\r\n";
-
-    // Send the request
-    fwrite( $varnish_sock, $cmd);
-
-    // Close the socket
-    fclose( $varnish_sock);
-}
-
-?>

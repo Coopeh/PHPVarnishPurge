@@ -41,12 +41,12 @@ $(document).ready(function()
 
   <form method="post" action="<?php echo $_SERVER['PHP_SELF']?>" id="varnishpurge">
     <p>Enter the URL to purge</p>
+    <p>Use * as wildcard for multiple purges</p>
     <input type="text" value="<?php isset($_POST['txtURL']) ? $_POST['txtURL'] : '' ?>" name="txtURL" class="defaultText" title="http://yourhost/some-url.html" />
   </form>
 
   <button type="submit" name="cmdSubmit" form="varnishpurge" value="Purge URL" class="clean-gray">Purge URL</button>
 
-</div>
 <?php
   if (isset($_POST['cmdSubmit'])) {
 
@@ -55,13 +55,18 @@ $(document).ready(function()
     $strpos = strposa($txtUrl, $protocols);
 
     if ($strpos === false) {
-      die("Sorry, this doesn't seem like a valid URL input.");
+      die("<p><span class='error'>Sorry, this doesn't seem like a valid URL, make sure you include the http:// at the start</span></p>");
+    }
+    elseif (!isset($_POST['txtURL']) || empty($_POST['txtURL']) || $_POST['txtURL'] === "http://yourhost/some-url.html") {
+      die("<p><span class='error'>Please enter a URL</span></p>");
     }
 
     varnishPurge($txtUrl);
 
   }
 ?>
+
+</div>
 
 </body>
 </html>
